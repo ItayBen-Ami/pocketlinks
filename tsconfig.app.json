@@ -23,13 +23,17 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
+      "@/hooks/*": [
+        "./src/hooks/*"
+      ],
       "@/*": [
         "./*"
       ]
-    }
+    },
   },
   "include": [
     "src",
-    "./*"
+    "**/*.ts",
+    "**/*.tsx"
   ]
 }

@@ -1,4 +1,3 @@
-import './App.css'
 import { ThemeProvider } from "@/components/ui/theme-provider"
 import { ModeToggle } from "@/components/ui/theme-toggle"
 import {
@@ -14,7 +13,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <div className='absolute top-4 w-full justify-end'>
+        <div className='flex justify-end w-[80vw] top-4 absolute'>
           <ModeToggle />
         </div>
         <WebsitesListPage />

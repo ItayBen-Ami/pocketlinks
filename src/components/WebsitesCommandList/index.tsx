@@ -8,7 +8,8 @@ import {
     CommandList,
     CommandSeparator,
 } from "@/components/ui/command"
-import { Website } from "../clients/supabase/types";
+import { Website } from "../../clients/supabase/types";
+import ActionsButton from "./ActionsButton";
 
 type WebsitesCommandListProps = {
     websites: Website[],
@@ -19,8 +20,8 @@ export default function WebsitesCommandList({ websites, loading }: WebsitesComma
     const websitesByCategory = groupBy(websites, "category")
 
     return (
-        <div>
-            <Command className="rounded-lg border shadow-md w-96">
+        <div className="w-[60vw] h-[80vh]">
+            <Command className="rounded-lg border-border border-2 shadow-2xl">
                 <CommandInput placeholder="Search..." />
                 <CommandList>
                     <CommandEmpty>{loading ? "Loading..." : "No results found."}</CommandEmpty>
@@ -30,11 +31,11 @@ export default function WebsitesCommandList({ websites, loading }: WebsitesComma
                                 <CommandGroup heading={categoryName}>
                                     {
                                         websitesByCategory[categoryName].map((website) => (
-                                            <CommandItem>
-                                                <div className="flex gap-2 size-full items-center cursor-pointer"
-                                                    onClick={() => { window.open(website.url, "_blank") }}>
-                                                    <img src={website.icon} className="size-4" />
-                                                    <span>{website.name}</span>
+                                            <CommandItem className="h-11">
+                                                <div className="flex gap-3 size-full items-center cursor-pointer"
+                                                    onClick={() => { window.location.href = website.url }}>
+                                                    <img src={website.icon} className="size-5" />
+                                                    <span className="text-md">{website.name}</span>
                                                 </div>
                                             </CommandItem>
                                         ))
@@ -45,6 +46,10 @@ export default function WebsitesCommandList({ websites, loading }: WebsitesComma
                         ))
                     }
                 </CommandList>
+                <CommandSeparator />
+                <div className="flex justify-end w-full">
+                    <ActionsButton />
+                </div>
             </Command>
         </div>
     )

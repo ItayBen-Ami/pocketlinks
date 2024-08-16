@@ -11,7 +11,7 @@ export default function WebsitesListPage() {
     })
 
     return (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center size-full">
             <WebsitesCommandList websites={websites} loading={isLoading} />
         </div>
     )
