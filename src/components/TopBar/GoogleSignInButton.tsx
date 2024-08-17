@@ -10,8 +10,8 @@ export default function GoogleSignInButton() {
   };
 
   return (
-    <Button variant="outline" className="flex gap-2" onClick={handleLogin}>
-      {/*// @ts-ignore */}
+    <Button variant="link" className="flex gap-2" onClick={handleLogin}>
+      {/*// @ts-expect-error className works*/}
       <GoogleIcon className="size-6 text-primary-foreground" />
       <div className="text-primary-foreground">Login</div>
     </Button>
