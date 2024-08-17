@@ -12,7 +12,7 @@ const UserContext = createContext<UserState>({
   isLoggedIn: false,
 });
 
-export default function UserProvider({ children }) {
+export default function UserProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const getUserSession = async () => {
       const {
