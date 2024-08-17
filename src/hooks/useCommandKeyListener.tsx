@@ -1,12 +1,6 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-export default function useCommandKeyListener({
-  key,
-  callback,
-}: {
-  key: string;
-  callback: () => void;
-}) {
+export default function useCommandKeyListener({ key, callback }: { key: string; callback: () => void }) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === key && (e.metaKey || e.ctrlKey)) {
@@ -15,7 +9,7 @@ export default function useCommandKeyListener({
       }
     };
 
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, [key, callback]);
 }

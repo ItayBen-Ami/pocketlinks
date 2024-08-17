@@ -1,27 +1,27 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import path from "path";
-import svgr from "vite-plugin-svgr";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
   plugins: [
     react(),
     svgr({
       svgrOptions: {
-        exportType: "default",
+        exportType: 'default',
         ref: true,
         svgo: false,
         titleProp: true,
       },
-      include: "**/*.svg",
+      include: '**/*.svg',
     }),
   ],
   resolve: {
     alias: {
-      "@/lib": path.resolve(__dirname, "lib"),
-      "@/components": path.resolve(__dirname, "components"),
-      "@/hooks": path.resolve(__dirname, "./src/hooks"),
-      "@/assets": path.resolve(__dirname, "./src/assets"),
+      '@/lib': path.resolve(__dirname, 'lib'),
+      '@/components': path.resolve(__dirname, 'components'),
+      '@/hooks': path.resolve(__dirname, './src/hooks'),
+      '@/assets': path.resolve(__dirname, './src/assets'),
     },
   },
 });

@@ -1,10 +1,10 @@
-import { useQuery } from "react-query";
-import { getWebsites } from "../clients/supabase";
-import WebsitesCommandList from "../components/WebsitesCommandList";
+import { useQuery } from 'react-query';
+import { getWebsites } from '../clients/supabase';
+import WebsitesCommandList from '../components/WebsitesCommandList';
 
 export default function WebsitesListPage() {
   const { data: websites, isLoading } = useQuery({
-    queryKey: "websites",
+    queryKey: 'websites',
     queryFn: async () => {
       return getWebsites();
     },

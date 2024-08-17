@@ -1,10 +1,10 @@
-import { ModeToggle } from "@/components/ui/theme-toggle";
-import { useTheme } from "@/components/ui/theme-provider";
-import { useMemo } from "react";
-import BlackLogo from "@/assets/pocketlinks-logo-blue-black.svg";
-import WhiteLogo from "@/assets/pocketlinks-logo-blue-white.svg";
-import GoogleSignInButton from "./GoogleSignInButton";
-import WelcomeMessage from "./WelcomeMessage";
+import { ModeToggle } from '@/components/ui/theme-toggle';
+import { useTheme } from '@/components/ui/theme-provider';
+import { useMemo } from 'react';
+import BlackLogo from '@/assets/pocketlinks-logo-blue-black.svg';
+import WhiteLogo from '@/assets/pocketlinks-logo-blue-white.svg';
+import GoogleSignInButton from './GoogleSignInButton';
+import WelcomeMessage from './WelcomeMessage';
 
 export default function TopBar() {
   const { theme } = useTheme();
@@ -15,12 +15,10 @@ export default function TopBar() {
     // @ts-expect-error className is allowed
     const lightModeIcon = <BlackLogo className="w-36" />;
 
-    if (theme === "dark") return darkModeIcon;
-    if (theme === "light") return lightModeIcon;
+    if (theme === 'dark') return darkModeIcon;
+    if (theme === 'light') return lightModeIcon;
 
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? darkModeIcon
-      : lightModeIcon;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? darkModeIcon : lightModeIcon;
   }, [theme]);
 
   return (
