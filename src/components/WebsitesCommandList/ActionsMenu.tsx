@@ -1,15 +1,14 @@
-import { CirclePlus } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import AddWebsiteDialog from './AddWebsiteDialog';
 
-export default function ActionsMenu() {
+type ActionMenuProps = {
+  isAddWebsiteDialogOpen: boolean;
+  handleChangeAddWebsiteDialogOpen: (isOpen: boolean) => void;
+};
+
+export default function ActionsMenu({ isAddWebsiteDialogOpen, handleChangeAddWebsiteDialogOpen }: ActionMenuProps) {
   return (
     <div className="flex flex-col gap-y-2">
-      <Button variant="ghost" className="w-full">
-        <div className="flex justify-start items-center gap-2 w-full">
-          <CirclePlus className="text-green-500" />
-          <div>Add Link</div>
-        </div>
-      </Button>
+      <AddWebsiteDialog isOpen={isAddWebsiteDialogOpen} handleChangeOpen={handleChangeAddWebsiteDialogOpen} />
     </div>
   );
 }

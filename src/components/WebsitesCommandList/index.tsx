@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/command';
 import { Website } from '../../clients/supabase/types';
 import ActionsButton from './ActionsButton';
+import EmptyState from './EmptyState';
 
 type WebsitesCommandListProps = {
   websites: Website[];
@@ -23,8 +24,8 @@ export default function WebsitesCommandList({ websites, loading }: WebsitesComma
     <div className="w-[60vw] h-[70vh]">
       <Command className="rounded-lg border-border border-2 shadow-2xl">
         <CommandInput placeholder="Search..." />
-        <CommandList>
-          <CommandEmpty>{loading ? 'Loading...' : 'No results found.'}</CommandEmpty>
+        <CommandList className="h-4/5">
+          <CommandEmpty>{loading ? 'Loading...' : <EmptyState />}</CommandEmpty>
           {Object.keys(websitesByCategory).map((categoryName, index) => (
             <div>
               <CommandGroup heading={categoryName}>

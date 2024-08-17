@@ -4,15 +4,26 @@ import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover
 import { useState } from 'react';
 import useCommandKeyListener from '@/hooks/useCommandKeyListener';
 import ActionsMenu from './ActionsMenu';
+import { Badge } from '@/components/ui/badge';
 
 export default function ActionsButton() {
   const [isActionsMenuOpen, setIsActionsMenuOpen] = useState(false);
+  const [isAddWebsiteDialogOpen, setAddWebsiteDialogOpen] = useState(false);
 
   const handleChangeActionMenuOpen = () => {
+    if (isActionsMenuOpen) {
+      setAddWebsiteDialogOpen(false);
+    }
     setIsActionsMenuOpen(!isActionsMenuOpen);
   };
 
+  const handleChangeAddWebsiteDialogOpen = () => {
+    setIsActionsMenuOpen(!isAddWebsiteDialogOpen);
+    setAddWebsiteDialogOpen(!isAddWebsiteDialogOpen);
+  };
+
   useCommandKeyListener({ key: 'k', callback: handleChangeActionMenuOpen });
+  useCommandKeyListener({ key: 'a', callback: handleChangeAddWebsiteDialogOpen });
 
   return (
     <Popover open={isActionsMenuOpen}>
@@ -20,17 +31,17 @@ export default function ActionsButton() {
         <div className="flex justify-start p-2" onClick={handleChangeActionMenuOpen}>
           <Button variant="ghost" className="size-lg flex gap-0.5">
             <div className="text-md mx-2">Actions</div>
-            <Button variant="secondary" size="sm">
+            <Badge variant="secondary" className="py-1">
               <CommandIcon className="size-3" />
-            </Button>
-            <Button variant="secondary" size="sm">
-              <div className="text-sm">K</div>
-            </Button>
+            </Badge>
+            <Badge variant="secondary" className="px-3">
+              K
+            </Badge>
           </Button>
         </div>
       </PopoverTrigger>
       <PopoverContent side="top" align="end">
-        <ActionsMenu />
+        <ActionsMenu isAddWebsiteDialogOpen={isAddWebsiteDialogOpen} handleChangeAddWebsiteDialogOpen={setAddWebsiteDialogOpen} />
       </PopoverContent>
     </Popover>
   );
