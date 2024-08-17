@@ -17,14 +17,14 @@ body,
 
 @layer base {
   :root {
-    --background: rgb(255, 255, 255);
+    --background: rgba(246, 247, 248, 0.5);
     --foreground: hsl(222.2 84% 4.9%);
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
     --popover: rgb(255, 255, 255);
     --popover-foreground: hsl(222.2 84% 4.9%);
-    --primary: hsl(222.2 47.4% 11.2%);
-    --primary-foreground: hsl(210 40% 98%);
+    --primary: rgb(25, 118, 210);
+    --primary-foreground: rgb(25, 118, 210);
     --secondary: hsl(210 40% 96.1%);
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
@@ -51,8 +51,8 @@ body,
     --card-foreground: 210 40% 98%;
     --popover: rgb(29, 32, 37);
     --popover-foreground: rgb(222, 223, 225);
-    --primary: rgb(29, 32, 37);
-    --primary-foreground: rgb(222, 223, 225);
+    --primary: rgb(25, 118, 210);
+    --primary-foreground: rgb(25, 118, 210);
     --secondary: hsl(240 5.3% 26.1%);
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
