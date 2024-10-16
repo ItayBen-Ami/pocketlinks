@@ -19,12 +19,12 @@ body,
   :root {
     --background: rgb(255, 255, 255);
     --foreground: hsl(222.2 84% 4.9%);
-    --card: 0 0% 100%;
+    --card: hsl(0 0% 100%);
     --card-foreground: 222.2 84% 4.9%;
     --popover: rgb(255, 255, 255);
     --popover-foreground: hsl(222.2 84% 4.9%);
     --primary: rgb(66 156 244);
-    --primary-foreground: hsl( 222.2 47.4% 11.2%);
+    --primary-foreground: hsl(222.2 47.4% 11.2%);
     --secondary: hsl(210 40% 96.1%);
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
@@ -47,7 +47,7 @@ body,
   .dark {
     --background: rgb(23, 25, 29);
     --foreground: rgb(148, 163, 184);
-    --card: 222.2 84% 4.9%;
+    --card: rgb(29, 32, 37);
     --card-foreground: 210 40% 98%;
     --popover: rgb(29, 32, 37);
     --popover-foreground: rgb(222, 223, 225);
@@ -83,4 +83,27 @@ body,
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@layer utilities {
+
+  /* Act as a border */
+  .card-wrapper {
+    @apply relative overflow-hidden rounded-2xl bg-gradient-to-b from-slate-700 to-slate-800;
+  }
+
+  /* Gradient */
+  .card-wrapper::before {
+    background: conic-gradient(rgba(244, 114, 182, 0.4) 0deg,
+        rgba(192, 132, 252, 0.4) 0deg,
+        transparent 80deg);
+
+    @apply absolute left-[-25%] top-[-25%] h-[150%] w-[150%] animate-border-spin content-[''];
+  }
+
+  /* Body */
+  .card-content {
+    @apply absolute left-[1px] top-[1px] h-[calc(100%-2px)] w-[calc(100%-2px)] rounded-2xl from-slate-800 to-slate-900;
+  }
+
 }

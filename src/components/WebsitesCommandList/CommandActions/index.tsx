@@ -5,8 +5,13 @@ import { useState } from 'react';
 import useCommandKeyListener from '@/hooks/useCommandKeyListener';
 import ActionsMenu from './ActionsMenu';
 import { Badge } from '@/components/ui/badge';
+import WebsiteWizard from '../WebsiteWizard';
 
-export default function ActionsButton() {
+type CommandActionsProps = {
+  categories: string[];
+};
+
+export default function CommandActions({ categories }: CommandActionsProps) {
   const [isActionsMenuOpen, setIsActionsMenuOpen] = useState(false);
   const [isAddWebsiteDialogOpen, setAddWebsiteDialogOpen] = useState(false);
 
@@ -17,13 +22,13 @@ export default function ActionsButton() {
     setIsActionsMenuOpen(!isActionsMenuOpen);
   };
 
-  const handleChangeAddWebsiteDialogOpen = () => {
-    setIsActionsMenuOpen(!isAddWebsiteDialogOpen);
-    setAddWebsiteDialogOpen(!isAddWebsiteDialogOpen);
-  };
-
-  useCommandKeyListener({ key: 'k', callback: handleChangeActionMenuOpen });
-  useCommandKeyListener({ key: 'a', callback: handleChangeAddWebsiteDialogOpen });
+  useCommandKeyListener({ key: 'a', callback: handleChangeActionMenuOpen });
+  useCommandKeyListener({
+    key: 'p',
+    callback: () => {
+      setAddWebsiteDialogOpen(!isAddWebsiteDialogOpen);
+    },
+  });
 
   return (
     <Popover open={isActionsMenuOpen}>
@@ -35,14 +40,15 @@ export default function ActionsButton() {
               <CommandIcon className="size-3" />
             </Badge>
             <Badge variant="secondary" className="px-3">
-              K
+              A
             </Badge>
           </Button>
         </div>
       </PopoverTrigger>
       <PopoverContent side="top" align="end">
-        <ActionsMenu isAddWebsiteDialogOpen={isAddWebsiteDialogOpen} handleChangeAddWebsiteDialogOpen={setAddWebsiteDialogOpen} />
+        <ActionsMenu openAddWebsiteDialog={() => setAddWebsiteDialogOpen(true)} />
       </PopoverContent>
+      <WebsiteWizard isOpen={isAddWebsiteDialogOpen} onChangeOpen={setAddWebsiteDialogOpen} categories={categories} />
     </Popover>
   );
 }

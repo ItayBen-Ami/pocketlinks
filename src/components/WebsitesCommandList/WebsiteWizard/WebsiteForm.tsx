@@ -1,33 +1,34 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { CirclePlus, CommandIcon } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { formSchema } from '../../utils/websiteForm';
+import { formSchema } from '../../../utils/websiteForm';
 import { z } from 'zod';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import Combobox from '@/components/ui/combobox';
+import { useMemo, useState } from 'react';
+import { Website } from '../../../clients/supabase/types';
 
-type AddWebsiteDialogProps = {
-  isOpen: boolean;
-  handleChangeOpen: (isOpen: boolean) => void;
+type WebsiteFormProps = {
+  categories: string[];
+  onSubmit: (data: Website) => void;
+  isLoading: boolean;
 };
 
-export function AddWebsiteForm() {
+export function WebsiteForm({ categories, onSubmit, isLoading }: WebsiteFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
       url: '',
-      image: '',
+      icon: '',
       category: '',
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  const initialCategoryOptions = useMemo(() => categories.map(category => ({ label: category, value: category })), [categories]);
+
+  const [categoryOptions, setCategoryOptions] = useState(initialCategoryOptions);
 
   return (
     <Form {...form}>
@@ -36,13 +37,13 @@ export function AddWebsiteForm() {
           <FormField
             control={form.control}
             name="name"
+            disabled={isLoading}
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="w-full">
                 <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input placeholder="Name" {...field} />
                 </FormControl>
-                <FormDescription>The name for your link</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -50,11 +51,24 @@ export function AddWebsiteForm() {
           <FormField
             control={form.control}
             name="category"
+            disabled={isLoading}
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="w-full">
                 <FormLabel>Category</FormLabel>
                 <FormControl>
-                  <Input placeholder="Category" {...field} />
+                  <div className="w-full">
+                    <Combobox
+                      mode="single"
+                      placeholder="Select category..."
+                      options={categoryOptions}
+                      selected={field.value}
+                      onChange={field.onChange}
+                      onCreate={newOption => {
+                        setCategoryOptions([...initialCategoryOptions, { label: newOption, value: newOption }]);
+                        field.onChange(newOption);
+                      }}
+                    />
+                  </div>
                 </FormControl>
               </FormItem>
             )}
@@ -63,6 +77,7 @@ export function AddWebsiteForm() {
         <FormField
           control={form.control}
           name="url"
+          disabled={isLoading}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Link URL</FormLabel>
@@ -74,7 +89,8 @@ export function AddWebsiteForm() {
         />
         <FormField
           control={form.control}
-          name="image"
+          name="icon"
+          disabled={isLoading}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Image URL</FormLabel>
@@ -86,41 +102,14 @@ export function AddWebsiteForm() {
         />
         <FormMessage />
         <div className="flex justify-around gap-2 mt-8">
-          <Button variant="secondary">Close</Button>
-          <Button type="submit">Submit</Button>
+          <Button variant="secondary" disabled={isLoading}>
+            Close
+          </Button>
+          <Button type="submit" disabled={isLoading}>
+            Create
+          </Button>
         </div>
       </form>
     </Form>
-  );
-}
-
-export default function AddWebsiteDialog({ isOpen, handleChangeOpen }: AddWebsiteDialogProps) {
-  return (
-    <Dialog open={isOpen} onOpenChange={handleChangeOpen}>
-      <DialogTrigger asChild>
-        <Button variant="ghost" onClick={() => handleChangeOpen(true)}>
-          <div className="flex justify-between items-center w-full">
-            <div className="flex items-center gap-2">
-              <CirclePlus className="text-green-500" />
-              <div>Add Link</div>
-            </div>
-            <div className="flex items-center gap-0.5">
-              <Badge variant="secondary" className="py-1">
-                <CommandIcon className="size-3" />
-              </Badge>
-              <Badge variant="secondary" className="px-3">
-                A
-              </Badge>
-            </div>
-          </div>
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Add link</DialogTitle>
-        </DialogHeader>
-        <AddWebsiteForm />
-      </DialogContent>
-    </Dialog>
   );
 }

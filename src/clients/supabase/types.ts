@@ -4,4 +4,11 @@ export type Website = {
   url: string;
   icon: string;
   category: string;
+  list: number;
+};
+
+export type SitePreview = {
+  title: string;
+  description: string;
+  image: string;
 };

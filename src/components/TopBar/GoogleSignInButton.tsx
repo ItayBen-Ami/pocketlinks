@@ -6,6 +6,9 @@ export default function GoogleSignInButton() {
   const handleLogin = () => {
     supabase.auth.signInWithOAuth({
       provider: 'google',
+      options: {
+        redirectTo: import.meta.env.VITE_REDIRECT_URL,
+      },
     });
   };
 

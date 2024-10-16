@@ -8,6 +8,6 @@ export const formSchema = z.object({
     })
     .max(50),
   url: z.string().url(),
-  image: z.string().url(),
+  icon: z.string().url(),
   category: z.string().min(2).max(50),
 });
