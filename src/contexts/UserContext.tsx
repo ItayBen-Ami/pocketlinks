@@ -1,6 +1,6 @@
 import { Session, User } from '@supabase/supabase-js';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { supabase } from '../clients/supabase';
+import { supabase } from '@clients/supabase';
 
 type UserState = {
   user: User | undefined;

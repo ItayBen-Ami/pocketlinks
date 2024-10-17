@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Command as CommandIcon } from 'lucide-react';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { useState } from 'react';
-import useCommandKeyListener from '@/hooks/useCommandKeyListener';
+import useCommandKeyListener from '@hooks/useCommandKeyListener';
 import ActionsMenu from './ActionsMenu';
 import { Badge } from '@/components/ui/badge';
 import WebsiteWizard from '../WebsiteWizard';
@@ -24,7 +24,7 @@ export default function CommandActions({ categories }: CommandActionsProps) {
 
   useCommandKeyListener({ key: 'a', callback: handleChangeActionMenuOpen });
   useCommandKeyListener({
-    key: 'p',
+    key: 'l',
     callback: () => {
       setAddWebsiteDialogOpen(!isAddWebsiteDialogOpen);
     },
@@ -48,7 +48,12 @@ export default function CommandActions({ categories }: CommandActionsProps) {
       <PopoverContent side="top" align="end">
         <ActionsMenu openAddWebsiteDialog={() => setAddWebsiteDialogOpen(true)} />
       </PopoverContent>
-      <WebsiteWizard isOpen={isAddWebsiteDialogOpen} onChangeOpen={setAddWebsiteDialogOpen} categories={categories} />
+      <WebsiteWizard
+        website={undefined}
+        isOpen={isAddWebsiteDialogOpen}
+        onChangeOpen={setAddWebsiteDialogOpen}
+        categories={categories}
+      />
     </Popover>
   );
 }

@@ -51,10 +51,11 @@ body,
     --card-foreground: 210 40% 98%;
     --popover: rgb(29, 32, 37);
     --popover-foreground: rgb(222, 223, 225);
-    --primary: rgb(25, 118, 210);
+    --primary: rgb(0, 123, 255);
     --primary-foreground: hsl(210 40% 98%);
-    --secondary: hsl(240 5.3% 26.1%);
+    --secondary: rgb(108, 117, 125);
     --secondary-foreground: 210 40% 98%;
+    --input: rgb(61, 61, 61);
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
     --accent: rgb(38, 41, 48);
@@ -62,7 +63,6 @@ body,
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
     --border: rgb(47, 52, 60);
-    --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;

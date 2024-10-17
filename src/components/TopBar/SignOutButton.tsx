@@ -1,5 +1,5 @@
 import { Button } from '../../../components/ui/button';
-import { supabase } from '../../clients/supabase';
+import { supabase } from '@clients/supabase';
 
 export default function SignOutButton() {
   const handleSignOut = async () => {

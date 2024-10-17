@@ -1,18 +1,9 @@
-import { useQuery } from 'react-query';
-import { getWebsites } from '../clients/supabase';
 import WebsitesCommandList from '../components/WebsitesCommandList';
-import { useUser } from '../contexts/UserContext';
 import WebsitesCardsList from '../components/WebsitesCardsList';
+import useGetWebsites from '@hooks/useGetWebsites';
 
 export default function WebsitesListPage() {
-  const { accessToken } = useUser();
-
-  const { data: websites, isLoading } = useQuery({
-    queryKey: ['websites', accessToken],
-    queryFn: async () => {
-      return getWebsites({ accessToken });
-    },
-  });
+  const { websites, isLoading } = useGetWebsites({});
 
   const categories = Array.from(
     (websites ?? []).reduce((acc, current) => {
@@ -20,7 +11,7 @@ export default function WebsitesListPage() {
 
       return acc;
     }, new Set<string>()),
-  );
+  ) as string[];
 
   return (
     <div className="flex justify-center items-center mt-[4.5rem]">

@@ -4,15 +4,15 @@ import {
   CommandEmpty,
   CommandGroup,
   CommandInput,
-  CommandItem,
   CommandList,
   CommandSeparator,
 } from '@/components/ui/command';
-import { Website } from '../../clients/supabase/types';
+import { Website } from '@clients/supabase/types';
 import EmptyState from './EmptyState';
 import CommandActions from './CommandActions';
-import useCommandKeyListener from '../../hooks/useCommandKeyListener';
+import useCommandKeyListener from '@hooks/useCommandKeyListener';
 import { useState } from 'react';
+import WebsiteRow from './WebsiteRow';
 
 type WebsitesCommandListProps = {
   websites: Website[];
@@ -36,18 +36,7 @@ export default function WebsitesCommandList({ websites = [], loading, categories
           <div>
             <CommandGroup heading={categoryName}>
               {websitesByCategory[categoryName].map(website => (
-                <CommandItem className="h-11">
-                  <div
-                    className="flex gap-3 size-full items-center cursor-pointer"
-                    onClick={() => {
-                      window.location.href = website.url;
-                    }}
-                    key={website.id}
-                  >
-                    <img src={website.icon} className="size-5" />
-                    <span className="text-md">{website.name}</span>
-                  </div>
-                </CommandItem>
+                <WebsiteRow website={website} />
               ))}
             </CommandGroup>
             {index < Object.keys(websitesByCategory).length - 1 && <CommandSeparator />}

@@ -20,7 +20,7 @@ export default function ActionsMenu({ openAddWebsiteDialog }: ActionMenuProps) {
               <CommandIcon className="size-3" />
             </Badge>
             <Badge variant="secondary" className="px-3">
-              P
+              L
             </Badge>
           </div>
         </div>
