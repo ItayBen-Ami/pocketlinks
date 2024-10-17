@@ -24,10 +24,10 @@ export default function WebsiteCard({
   const getImageSource = () => {
     if (imageUrl === altImage) return signedUrl || altImage;
 
-    return imageUrl;
+    return !useSignedUrl ? imageUrl : signedUrl;
   };
 
-  const [image, setImage] = useState(getImageSource());
+  const [useSignedUrl, setUseSignedUrl] = useState(false);
   const [isEditWebsiteDialogOpen, setIsEditWebsiteDialogOpen] = useState(false);
 
   return (
@@ -54,7 +54,7 @@ export default function WebsiteCard({
               </div>
             </CardTitle>
             <CardDescription>
-              <img className="h-44 w-full" src={image} onError={() => setImage(signedUrl)} />
+              <img className="h-44 w-full" src={getImageSource()} onError={() => setUseSignedUrl(true)} />
             </CardDescription>
           </CardHeader>
           <div className="mt-8 pt-4">
