@@ -112,7 +112,7 @@ export function WebsiteForm({ website, categories, onSubmit, isLoading, onClose,
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  <span>Upload a site icon</span>
+                  <span>Upload a site image</span>
                   <span className="italic"> (optional)</span>
                 </FormLabel>
                 <FormControl>

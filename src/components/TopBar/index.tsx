@@ -25,15 +25,17 @@ export default function TopBar() {
   }, [theme]);
 
   return (
-    <div className="flex justify-between items-center w-full top-0 sticky backdrop-blur-md p-4 border-b-2 border-border">
-      <div className="flex justify-start gap-4">
-        {logo}
-        <WelcomeMessage user={user} isLoggedIn={isLoggedIn} />
+    <>
+      <div className="flex justify-between items-center w-full top-0 sticky backdrop-blur-md p-4 border-b-2 border-border bg-transparent z-50">
+        <div className="flex justify-start gap-4">
+          {logo}
+          <WelcomeMessage user={user} isLoggedIn={isLoggedIn} />
+        </div>
+        <div className="flex justify-end gap-4">
+          {!isLoggedIn ? <GoogleSignInButton /> : <SignOutButton />}
+          <ModeToggle />
+        </div>
       </div>
-      <div className="flex justify-end gap-4">
-        {!isLoggedIn ? <GoogleSignInButton /> : <SignOutButton />}
-        <ModeToggle />
-      </div>
-    </div>
+    </>
   );
 }

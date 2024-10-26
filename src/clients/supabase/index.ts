@@ -23,10 +23,35 @@ const getToken = async () => {
   return session.data.session?.access_token;
 };
 
-export const getWebsites = async ({ select = '*' }: { select?: string }): Promise<Website[]> => {
+export const getWebsites = async ({
+  select = '*',
+  filters = {},
+  listId,
+}: {
+  select?: string;
+  filters?: Record<string, unknown>;
+  listId: string;
+}): Promise<Website[]> => {
   const response = await axios.get(`${SUPABASE_URL}/rest/v1/websites`, {
     params: {
+      ...filters,
+      list_id: `eq.${listId}`,
       select,
+      order: 'created_at.asc',
+    },
+    headers: {
+      apikey: SUPABASE_CLIENT_ANON_KEY,
+      Authorization: `Bearer ${await getToken()}`,
+    },
+  });
+
+  return response.data;
+};
+
+export const getLists = async ({ filters = {} }: { filters?: Record<string, unknown> }) => {
+  const response = await axios.get(`${SUPABASE_URL}/rest/v1/lists`, {
+    params: {
+      ...filters,
       order: 'created_at.asc',
     },
     headers: {
@@ -68,19 +93,29 @@ export const editWebsite = async (website: Website) => {
   return response.data as Website[];
 };
 
-export const getSitePreviews = async (urls: string[]) => {
+export const deleteWebsite = async (id: string) => {
   const accessToken = await getToken();
 
-  const response = await axios.post(
-    `${SUPABASE_URL}/functions/v1/sitePreview`,
-    { urls },
-    {
-      headers: {
-        apikey: SUPABASE_CLIENT_ANON_KEY,
-        Authorization: `Bearer ${accessToken}`,
-      },
+  const response = await axios.delete(`${SUPABASE_URL}/rest/v1/websites?id=eq.${id}`, {
+    headers: {
+      apikey: SUPABASE_CLIENT_ANON_KEY,
+      Authorization: `Bearer ${accessToken}`,
     },
-  );
+  });
+
+  return response.data;
+};
+
+export const getSitePreviews = async (listId: number) => {
+  const accessToken = await getToken();
+
+  const response = await axios.get(`${SUPABASE_URL}/functions/v1/sitePreview`, {
+    headers: {
+      apikey: SUPABASE_CLIENT_ANON_KEY,
+      Authorization: `Bearer ${accessToken}`,
+    },
+    params: { listId },
+  });
 
   return response.data as SitePreview[];
 };
@@ -103,7 +138,7 @@ export const getUserFileUrl = async (filePath: string) => {
 
   const { data, error } = await supabase.storage
     .from('icons')
-    .createSignedUrl(filePath.split(`${BUCKETS_URL}/icons`).at(-1) ?? '', 60);
+    .createSignedUrl(filePath.split(`${BUCKETS_URL}/icons`).at(-1) ?? '', 60 * 60 * 2);
 
   if (error) {
     return null;

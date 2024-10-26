@@ -1,39 +1,24 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Website } from '@clients/supabase/types';
-import { groupBy, keyBy, uniqBy } from 'lodash';
-import { useMemo } from 'react';
-import { getSitePreviews } from '@clients/supabase';
-import { useQuery } from 'react-query';
+import { groupBy } from 'lodash';
 import WebsiteCard from './WebsiteCard';
+import { Website } from '../../types/website';
+import { Suspense } from 'react';
+import { Await, useLoaderData } from 'react-router-dom';
+import { SitePreview } from '../../clients/supabase/types';
+import CardSkeleton from './WebsiteCard/CardSkeleton';
 
 type WebsitesCardsProps = {
   websites: Website[];
-  loading: boolean;
   categories: string[];
 };
 
-export default function WebsitesCardsList({ websites, loading, categories }: WebsitesCardsProps) {
+export default function WebsitesCardsList({ websites, categories }: WebsitesCardsProps) {
   const websitesByCategory = groupBy(websites, 'category');
-  const siteUrls = useMemo(() => uniqBy(websites, 'url').map(({ url }) => url), [websites]);
-
-  const { data: sitePreviews } = useQuery({
-    queryKey: ['sitePreviews', siteUrls],
-    queryFn: async () => {
-      return getSitePreviews(siteUrls);
-    },
-  });
-
-  const getSiteImageUrl = (image: string | undefined, siteUrl: string) => {
-    const altImage = 'https://www.google.com/s2/favicons?domain=' + siteUrl;
-
-    return !image || image === 'No image found' ? altImage : image;
-  };
-
-  const sitePreviewsByKey = keyBy(sitePreviews, 'url');
+  const { sitePreviews } = useLoaderData() as { sitePreviews: Promise<SitePreview[]> };
 
   return (
     <div className="size-full p-16">
-      {categories.length ? (
+      {
         <Accordion type="multiple" defaultValue={categories ? categories : []}>
           {categories.map(category => (
             <AccordionItem value={category} key={category}>
@@ -43,21 +28,31 @@ export default function WebsitesCardsList({ websites, loading, categories }: Web
               <AccordionContent>
                 <div className="grid-cols-4 grid gap-8">
                   {websitesByCategory[category].map(website => (
-                    <WebsiteCard
-                      website={website}
-                      description={sitePreviewsByKey[website.url]?.description}
-                      imageUrl={getSiteImageUrl(sitePreviewsByKey[website.url]?.image, website.url)}
-                      categories={categories}
-                    />
+                    <Suspense fallback={<CardSkeleton website={website} />}>
+                      <Await
+                        resolve={sitePreviews}
+                        children={(resolvedPreviews: SitePreview[]) => {
+                          const resolvedPreview = resolvedPreviews.find(preview => preview.url === website.url);
+
+                          return (
+                            <WebsiteCard
+                              website={website}
+                              description={resolvedPreview?.description ?? ''}
+                              categories={categories}
+                              faviconUrl={resolvedPreview?.faviconUrl ?? ''}
+                              icon={resolvedPreview?.image ?? ''}
+                            />
+                          );
+                        }}
+                      />
+                    </Suspense>
                   ))}
                 </div>
               </AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>
-      ) : (
-        loading
-      )}
+      }
     </div>
   );
 }

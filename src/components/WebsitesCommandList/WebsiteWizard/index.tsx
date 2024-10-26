@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { WebsiteForm } from './WebsiteForm';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { Website } from '@clients/supabase/types';
 import { createNewWebsite, uploadFile, BUCKETS_URL, editWebsite } from '@clients/supabase';
 import z from 'zod';
@@ -9,6 +9,7 @@ import { formSchema } from '../../../utils/websiteForm';
 import useGetWebsites from '@hooks/useGetWebsites';
 import { useMemo } from 'react';
 import { WizardModes } from './constants';
+import { AxiosError } from 'axios';
 
 type WebsiteWizardProps = {
   website: Website | undefined;
@@ -48,9 +49,9 @@ export default function WebsiteWizard({ website = undefined, isOpen, onChangeOpe
       });
       refetchWebsites();
     },
-    onError: () => {
+    onError: (error: AxiosError) => {
       toast({
-        title: 'An error occurred. Please try again',
+        title: `An error occurred: ${error.response?.data!.message}`,
         variant: 'destructive',
       });
     },
@@ -66,9 +67,9 @@ export default function WebsiteWizard({ website = undefined, isOpen, onChangeOpe
       refetchWebsites();
       onChangeOpen(false);
     },
-    onError: () => {
+    onError: (error: AxiosError) => {
       toast({
-        title: 'An error occurred. Please try again',
+        title: `An error occurred: ${error.response?.data!.message}`,
         variant: 'destructive',
       });
     },

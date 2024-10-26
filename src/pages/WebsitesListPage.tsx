@@ -1,12 +1,13 @@
 import WebsitesCommandList from '../components/WebsitesCommandList';
 import WebsitesCardsList from '../components/WebsitesCardsList';
-import useGetWebsites from '@hooks/useGetWebsites';
+import { useLoaderData } from 'react-router-dom';
+import { Website } from '../types/website';
 
 export default function WebsitesListPage() {
-  const { websites, isLoading } = useGetWebsites({});
+  const { websites } = useLoaderData() as { websites: Website[] };
 
   const categories = Array.from(
-    (websites ?? []).reduce((acc, current) => {
+    websites.reduce((acc, current) => {
       acc.add(current.category);
 
       return acc;
@@ -15,8 +16,8 @@ export default function WebsitesListPage() {
 
   return (
     <div className="flex justify-center items-center mt-[4.5rem]">
-      <WebsitesCardsList websites={websites ?? []} loading={isLoading} categories={categories} />
-      <WebsitesCommandList websites={websites ?? []} loading={isLoading} categories={categories} />
+      <WebsitesCardsList websites={websites} categories={categories} />
+      <WebsitesCommandList websites={websites} loading={false} categories={categories} />
     </div>
   );
 }
