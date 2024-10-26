@@ -28,7 +28,7 @@ export default function WebsitesCardsList({ websites, categories }: WebsitesCard
               <AccordionContent>
                 <div className="grid-cols-4 grid gap-8">
                   {websitesByCategory[category].map(website => (
-                    <Suspense fallback={<CardSkeleton website={website} />}>
+                    <Suspense key={website.id} fallback={<CardSkeleton website={website} />}>
                       <Await
                         resolve={sitePreviews}
                         children={(resolvedPreviews: SitePreview[]) => {
@@ -39,7 +39,6 @@ export default function WebsitesCardsList({ websites, categories }: WebsitesCard
                               website={website}
                               description={resolvedPreview?.description ?? ''}
                               categories={categories}
-                              faviconUrl={resolvedPreview?.faviconUrl ?? ''}
                               icon={resolvedPreview?.image ?? ''}
                             />
                           );

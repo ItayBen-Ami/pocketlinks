@@ -23,46 +23,6 @@ const getToken = async () => {
   return session.data.session?.access_token;
 };
 
-export const getWebsites = async ({
-  select = '*',
-  filters = {},
-  listId,
-}: {
-  select?: string;
-  filters?: Record<string, unknown>;
-  listId: string;
-}): Promise<Website[]> => {
-  const response = await axios.get(`${SUPABASE_URL}/rest/v1/websites`, {
-    params: {
-      ...filters,
-      list_id: `eq.${listId}`,
-      select,
-      order: 'created_at.asc',
-    },
-    headers: {
-      apikey: SUPABASE_CLIENT_ANON_KEY,
-      Authorization: `Bearer ${await getToken()}`,
-    },
-  });
-
-  return response.data;
-};
-
-export const getLists = async ({ filters = {} }: { filters?: Record<string, unknown> }) => {
-  const response = await axios.get(`${SUPABASE_URL}/rest/v1/lists`, {
-    params: {
-      ...filters,
-      order: 'created_at.asc',
-    },
-    headers: {
-      apikey: SUPABASE_CLIENT_ANON_KEY,
-      Authorization: `Bearer ${await getToken()}`,
-    },
-  });
-
-  return response.data;
-};
-
 export const createNewWebsite = async (website: Website) => {
   const accessToken = await getToken();
 
@@ -112,7 +72,7 @@ export const getSitePreviews = async (listId: number) => {
   const response = await axios.get(`${SUPABASE_URL}/functions/v1/sitePreview`, {
     headers: {
       apikey: SUPABASE_CLIENT_ANON_KEY,
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken || SUPABASE_CLIENT_ANON_KEY}`,
     },
     params: { listId },
   });

@@ -4,7 +4,6 @@ import { Button } from '../../components/ui/button';
 import { useMutation } from '@tanstack/react-query';
 import { deleteWebsite } from '@clients/supabase';
 import { useToast } from '@/components/hooks/useToast';
-import useGetWebsites from '@hooks/useGetWebsites';
 
 type DeleteSiteDialogProps = {
   isOpen: boolean;
@@ -22,11 +21,8 @@ export default function DeleteSiteDialog({ isOpen, onClose, website }: DeleteSit
         title: `${website.name} was removed`,
         variant: 'success',
       });
-      refetchWebsites();
     },
   });
-
-  const { refetchWebsites } = useGetWebsites({ manual: true });
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

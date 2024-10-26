@@ -11,7 +11,7 @@ import { Website } from '@clients/supabase/types';
 import EmptyState from './EmptyState';
 import CommandActions from './CommandActions';
 import useCommandKeyListener from '@hooks/useCommandKeyListener';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import WebsiteRow from './WebsiteRow';
 
 type WebsitesCommandListProps = {
@@ -23,12 +23,26 @@ type WebsitesCommandListProps = {
 export default function WebsitesCommandList({ websites = [], loading, categories }: WebsitesCommandListProps) {
   const websitesByCategory = groupBy(websites, 'category');
 
+  const websitesFilter = useCallback(
+    (value: string, search: string) => {
+      const website = websites.find(({ name }) => name === value);
+
+      const searchString = search.toUpperCase();
+
+      if (website?.name.toUpperCase().includes(searchString) || website?.category.toUpperCase().includes(searchString))
+        return 1;
+
+      return 0;
+    },
+    [websites],
+  );
+
   const [commandMenuOpen, setCommandMenuOpen] = useState(false);
 
   useCommandKeyListener({ key: 'k', callback: () => setCommandMenuOpen(!commandMenuOpen) });
 
   return (
-    <CommandDialog open={commandMenuOpen} onOpenChange={setCommandMenuOpen}>
+    <CommandDialog filter={websitesFilter} open={commandMenuOpen} onOpenChange={setCommandMenuOpen}>
       <CommandInput placeholder="Search..." />
       <CommandList className="h-4/5">
         <CommandEmpty>{loading ? 'Loading...' : <EmptyState />}</CommandEmpty>

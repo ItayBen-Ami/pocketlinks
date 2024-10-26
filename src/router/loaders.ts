@@ -1,24 +1,32 @@
 import { QueryClient } from '@tanstack/react-query';
-import { getLists, getSitePreviews, getUserFileUrl, getWebsites } from '../clients/supabase';
+import { getSitePreviews, getUserFileUrl, supabase } from '../clients/supabase';
 import { Params, defer } from 'react-router-dom';
+import { Website } from '@clients/supabase/types';
+import { PostgrestMaybeSingleResponse } from '@supabase/supabase-js';
 
 export const websitesLoader =
   (queryClient: QueryClient) =>
   async ({ params }: { params: Params }) => {
     const { listId } = params;
 
-    const [websites, lists] = await Promise.all([
+    const [{ data: websites }, { data: lists }] = await Promise.all([
       queryClient.ensureQueryData({
-        queryKey: ['websites', listId],
-        queryFn: async () => getWebsites({ listId: listId ?? '' }),
+        queryKey: ['websites', listId ? parseInt(listId) : ''],
+        queryFn: async () =>
+          (await supabase
+            .from('websites')
+            .select('*')
+            .eq('list_id', listId)
+            .order('created_at', { ascending: true })) as PostgrestMaybeSingleResponse<Website[]>,
       }),
       queryClient.ensureQueryData({
-        queryKey: ['lists', listId],
-        queryFn: async () => getLists({ filters: { id: `eq.${listId}` } }),
+        queryKey: ['lists', listId ? parseInt(listId) : ''],
+        queryFn: async () =>
+          (await supabase.from('lists').select('*').eq('id', listId)) as PostgrestMaybeSingleResponse<unknown[]>,
       }),
     ]);
 
-    if (!lists.length) throw new Error('Invalid list ID');
+    if (!lists?.length || !websites) throw new Error('Invalid list ID');
 
     const siteImages = websites.map(({ icon, url }) => ({ icon, url })).filter(icon => !!icon);
     const imageUrlsPromise = Promise.all(

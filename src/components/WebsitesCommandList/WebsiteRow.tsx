@@ -1,10 +1,8 @@
 import { Website } from '@clients/supabase/types';
-import useGetSignedUrl from '@hooks/useGetSignedUrl';
 import { CommandItem } from '@/components/ui/command';
+import Favicon from '../Favicon';
 
 export default function WebsiteRow({ website }: { website: Website }) {
-  const { signedUrl } = useGetSignedUrl({ icon: website.icon });
-
   return (
     <CommandItem className="h-11">
       <div
@@ -14,7 +12,7 @@ export default function WebsiteRow({ website }: { website: Website }) {
         }}
         key={website.id}
       >
-        <img src={signedUrl ?? 'https://www.google.com/s2/favicons?domain=' + website.url} className="size-5" />
+        <Favicon website={website} />
         <span className="text-md">{website.name}</span>
       </div>
     </CommandItem>

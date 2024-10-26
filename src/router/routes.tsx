@@ -1,4 +1,4 @@
-import { createBrowserRouter, Link } from 'react-router-dom';
+import { createBrowserRouter, Link, Navigate } from 'react-router-dom';
 import ErrorPage from '../pages/ErrorPage';
 import WebsitesListPage from '../pages/WebsitesListPage';
 import { websitesLoader } from './loaders';
@@ -12,6 +12,7 @@ export const getRouter = (queryClient: QueryClient) =>
       element: <AppLayout />,
       errorElement: <ErrorPage />,
       children: [
+        { index: true, element: <Navigate to="/lists" replace /> },
         {
           path: 'lists/:listId',
           element: <WebsitesListPage />,

@@ -9,6 +9,7 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { ScrollArea } from './scroll-area';
 import { useMemo } from 'react';
+import _ from 'lodash';
 
 export type ComboboxOptions = {
   value: string;
@@ -65,7 +66,9 @@ export default function Combobox({
               <div className="relative mr-auto flex flex-grow flex-wrap items-center overflow-hidden">
                 <span>
                   {mode === 'multiple' && Array.isArray(selected)
-                    ? selected.map((selectedValue: string) => options.find(item => item.value === selectedValue)?.label).join(', ')
+                    ? selected
+                        .map((selectedValue: string) => options.find(item => item.value === selectedValue)?.label)
+                        .join(', ')
                     : mode === 'single' && options.find(item => item.value === selected)?.label}
                 </span>
               </div>
@@ -81,7 +84,7 @@ export default function Combobox({
               if (value.includes(search)) return 1;
               return 0;
             }}
-          // shouldFilter={true}
+            // shouldFilter={true}
           >
             <CommandInput
               placeholder={placeholder ?? 'Cari Item...'}
@@ -127,7 +130,12 @@ export default function Combobox({
                           }
                         }}
                       >
-                        <Check className={cn('mr-2 h-4 w-4', selected.includes(option.value) ? 'opacity-100' : 'opacity-0')} />
+                        <Check
+                          className={cn(
+                            'mr-2 h-4 w-4',
+                            _.castArray(selected).includes(option.value) ? 'opacity-100' : 'opacity-0',
+                          )}
+                        />
                         {option.label}
                       </CommandItem>
                     ))}

@@ -1,15 +1,15 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { WebsiteForm } from './WebsiteForm';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Website } from '@clients/supabase/types';
 import { createNewWebsite, uploadFile, BUCKETS_URL, editWebsite } from '@clients/supabase';
 import z from 'zod';
 import { useToast } from '@/components/hooks/useToast';
 import { formSchema } from '../../../utils/websiteForm';
-import useGetWebsites from '@hooks/useGetWebsites';
 import { useMemo } from 'react';
 import { WizardModes } from './constants';
 import { AxiosError } from 'axios';
+import { useRevalidator } from 'react-router-dom';
 
 type WebsiteWizardProps = {
   website: Website | undefined;
@@ -21,7 +21,9 @@ type WebsiteWizardProps = {
 export default function WebsiteWizard({ website = undefined, isOpen, onChangeOpen, categories }: WebsiteWizardProps) {
   const mode = useMemo(() => (website ? WizardModes.Edit : WizardModes.Create), [website]);
 
-  const { refetchWebsites } = useGetWebsites({ manual: true });
+  const { revalidate } = useRevalidator();
+
+  const queryClient = useQueryClient();
 
   const { toast } = useToast();
 
@@ -42,12 +44,13 @@ export default function WebsiteWizard({ website = undefined, isOpen, onChangeOpe
 
   const { mutate: createWebsite, isLoading: isCreateSiteLoading } = useMutation({
     mutationFn: (data: Website) => createNewWebsite({ ...data }),
-    onSuccess: () => {
+    onSuccess: async () => {
       toast({
         title: 'Website added successfully',
         variant: 'success',
       });
-      refetchWebsites();
+      await queryClient.removeQueries({ queryKey: ['websites', website?.list_id] });
+      revalidate();
     },
     onError: (error: AxiosError) => {
       toast({
@@ -59,12 +62,13 @@ export default function WebsiteWizard({ website = undefined, isOpen, onChangeOpe
 
   const { mutate: editSite, isLoading: isEditSiteLoading } = useMutation({
     mutationFn: (data: Website) => editWebsite({ ...data }),
-    onSuccess: () => {
+    onSuccess: async () => {
       toast({
         title: 'Website edited successfully',
         variant: 'success',
       });
-      refetchWebsites();
+      await queryClient.removeQueries({ queryKey: ['websites', website?.list_id] });
+      revalidate();
       onChangeOpen(false);
     },
     onError: (error: AxiosError) => {

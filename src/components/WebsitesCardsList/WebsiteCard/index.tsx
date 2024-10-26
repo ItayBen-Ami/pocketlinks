@@ -4,18 +4,17 @@ import WebsiteWizard from '../../WebsitesCommandList/WebsiteWizard';
 import DeleteSiteDialog from '../../DeleteSiteDialog';
 import CardBody from './CardBody';
 import CardImage from './CardImage';
+import Favicon from '../../Favicon';
 
 export default function WebsiteCard({
   website,
   description,
   categories,
-  faviconUrl,
   icon,
 }: {
   website: Website;
   description: string;
   categories: string[];
-  faviconUrl: string;
   icon: string;
 }) {
   const [isEditWebsiteDialogOpen, setIsEditWebsiteDialogOpen] = useState(false);
@@ -25,7 +24,7 @@ export default function WebsiteCard({
     <>
       <CardBody
         website={website}
-        header={<img className="size-6 rounded-full" src={faviconUrl} />}
+        header={<Favicon website={website} />}
         body={<CardImage website={website} icon={icon} />}
         footer={<div className="max-h-[125px] overflow-auto">{description}</div>}
         onEditClick={() => setIsEditWebsiteDialogOpen(true)}
