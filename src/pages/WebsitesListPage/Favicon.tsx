@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { SitePreview, Website } from '@clients/supabase/types';
 import { Await, useLoaderData } from 'react-router-dom';
-import { IMAGE_FETCH_ERROR_MESSAGE, IMAGES } from '../utils/images';
+import { IMAGE_FETCH_ERROR_MESSAGE, IMAGES } from '../../utils/images';
 
 const Favicon = ({ website }: { website: Website }) => {
   const { sitePreviews } = useLoaderData() as { sitePreviews: Promise<SitePreview[]> };

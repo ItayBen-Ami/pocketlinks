@@ -1,9 +1,9 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@components/ui/dialog';
 import { Website } from '@clients/supabase/types';
-import { Button } from '../../components/ui/button';
+import { Button } from '@components/ui/button';
 import { useMutation } from '@tanstack/react-query';
 import { deleteWebsite } from '@clients/supabase';
-import { useToast } from '@/components/hooks/useToast';
+import { useToast } from '@components/hooks/useToast';
 
 type DeleteSiteDialogProps = {
   isOpen: boolean;

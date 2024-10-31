@@ -31,6 +31,9 @@
       ],
       "@clients/*": ["./src/clients/*"],
       "@hooks/*": ["./src/hooks/*"],
+      "@components/*": [
+        "./src/components/*"
+      ],
       "@/*": [
         "./*"
       ]

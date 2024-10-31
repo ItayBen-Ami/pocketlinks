@@ -1,9 +1,9 @@
 import { createBrowserRouter, Link, Navigate } from 'react-router-dom';
 import ErrorPage from '../pages/ErrorPage';
-import WebsitesListPage from '../pages/WebsitesListPage';
+import WebsitesListPage from '../pages/WebsitesListPage/index';
 import { websitesLoader } from './loaders';
 import { QueryClient } from '@tanstack/react-query';
-import AppLayout from '../components/Layout';
+import AppLayout from '../components/ui/Layout';
 
 export const getRouter = (queryClient: QueryClient) =>
   createBrowserRouter([

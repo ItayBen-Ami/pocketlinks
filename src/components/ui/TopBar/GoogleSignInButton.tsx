@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@components/ui/button';
 import GoogleIcon from '@/assets/google-icon.svg';
 import { supabase } from '@clients/supabase';
 

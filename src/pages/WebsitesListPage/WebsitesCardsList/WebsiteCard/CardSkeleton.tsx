@@ -1,6 +1,6 @@
 import { Website } from '@clients/supabase/types';
 import CardBody from './CardBody';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Skeleton } from '@components/ui/skeleton';
 
 type CardSkeletonProps = {
   website: Website;

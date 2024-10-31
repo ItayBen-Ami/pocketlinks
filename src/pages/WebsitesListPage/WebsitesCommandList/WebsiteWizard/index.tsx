@@ -1,11 +1,11 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@components/ui/dialog';
 import { WebsiteForm } from './WebsiteForm';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Website } from '@clients/supabase/types';
 import { createNewWebsite, uploadFile, BUCKETS_URL, editWebsite } from '@clients/supabase';
 import z from 'zod';
-import { useToast } from '@/components/hooks/useToast';
-import { formSchema } from '../../../utils/websiteForm';
+import { useToast } from '@components/hooks/useToast';
+import { formSchema } from '../../../../utils/websiteForm';
 import { useMemo } from 'react';
 import { WizardModes } from './constants';
 import { AxiosError } from 'axios';

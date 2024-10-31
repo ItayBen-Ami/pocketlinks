@@ -1,5 +1,5 @@
 import { Website } from '@clients/supabase/types';
-import { CommandItem } from '@/components/ui/command';
+import { CommandItem } from '@components/ui/command';
 import Favicon from '../Favicon';
 
 export default function WebsiteRow({ website }: { website: Website }) {

@@ -1,6 +1,6 @@
 import { CircleX } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { formatBytes } from '../../utils/formatBytes';
+import { Badge } from '@components/ui/badge';
+import { formatBytes } from '../../../utils/formatBytes';
 type PreviewImageProps = {
   preview: string;
   fileSize: number;

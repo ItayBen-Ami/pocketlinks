@@ -1,7 +1,7 @@
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@components/ui/card';
 import { Website } from '@clients/supabase/types';
-import { ButtonGroup } from '@/components/ui/button-group';
-import { Button } from '@/components/ui/button';
+import { ButtonGroup } from '@components/ui/button-group';
+import { Button } from '@components/ui/button';
 import { Pencil, Trash2 } from 'lucide-react';
 
 type CardBodyProps = {

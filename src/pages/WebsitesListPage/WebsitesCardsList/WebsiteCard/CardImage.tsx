@@ -1,8 +1,8 @@
 import { Website } from '@clients/supabase/types';
 import { Suspense } from 'react';
 import { Await, useLoaderData } from 'react-router-dom';
-import { Skeleton } from '@/components/ui/skeleton';
-import { IMAGES } from '../../../utils/images';
+import { Skeleton } from '@components/ui/skeleton';
+import { IMAGES } from '../../../../utils/images';
 
 export default function CardImage({ website, icon }: { website: Website; icon: string }) {
   const { images } = useLoaderData() as { images: Promise<{ icon: string; url: string }[]> };

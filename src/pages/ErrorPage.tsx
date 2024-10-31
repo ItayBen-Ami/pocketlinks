@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button';
-import TopBar from '../components/TopBar';
+import { Button } from '@components/ui/button';
+import TopBar from '../components/ui/TopBar';
 import { useNavigate } from 'react-router-dom';
 
 export default function ErrorPage() {

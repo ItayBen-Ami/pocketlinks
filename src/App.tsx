@@ -1,6 +1,6 @@
-import { ThemeProvider } from '@/components/ui/theme-provider';
+import { ThemeProvider } from '@components/ui/theme-provider';
 import UserProvider from './contexts/UserContext';
-import { Toaster } from '@/components/ui/toaster';
+import { Toaster } from '@components/ui/toaster';
 import { getRouter } from './router/routes';
 import { RouterProvider } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';

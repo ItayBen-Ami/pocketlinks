@@ -6,7 +6,7 @@ import {
   CommandInput,
   CommandList,
   CommandSeparator,
-} from '@/components/ui/command';
+} from '@components/ui/command';
 import { Website } from '@clients/supabase/types';
 import EmptyState from './EmptyState';
 import CommandActions from './CommandActions';

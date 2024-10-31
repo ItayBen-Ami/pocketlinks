@@ -1,10 +1,10 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@components/ui/button';
 import { Command as CommandIcon } from 'lucide-react';
-import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
+import { Popover, PopoverTrigger, PopoverContent } from '@components/ui/popover';
 import { useState } from 'react';
 import useCommandKeyListener from '@hooks/useCommandKeyListener';
 import ActionsMenu from './ActionsMenu';
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@components/ui/badge';
 import WebsiteWizard from '../WebsiteWizard';
 
 type CommandActionsProps = {

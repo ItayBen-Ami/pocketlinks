@@ -1,4 +1,4 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
 import { groupBy } from 'lodash';
 import WebsiteCard from './WebsiteCard';
 import { Website } from '../../types/website';

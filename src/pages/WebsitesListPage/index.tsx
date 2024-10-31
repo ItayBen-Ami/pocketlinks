@@ -1,7 +1,7 @@
-import WebsitesCommandList from '../components/WebsitesCommandList';
-import WebsitesCardsList from '../components/WebsitesCardsList';
+import WebsitesCommandList from './WebsitesCommandList';
+import WebsitesCardsList from './WebsitesCardsList';
 import { useLoaderData } from 'react-router-dom';
-import { Website } from '../types/website';
+import { Website } from '@clients/supabase/types';
 
 export default function WebsitesListPage() {
   const { websites } = useLoaderData() as { websites: Website[] };

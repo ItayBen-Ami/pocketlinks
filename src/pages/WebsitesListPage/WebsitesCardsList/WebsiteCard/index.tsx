@@ -1,10 +1,10 @@
 import { Website } from '@clients/supabase/types';
 import { useState } from 'react';
 import WebsiteWizard from '../../WebsitesCommandList/WebsiteWizard';
-import DeleteSiteDialog from '../../../pages/WebsitesListPage/DeleteSiteDialog';
+import DeleteSiteDialog from '../../DeleteSiteDialog';
 import CardBody from './CardBody';
 import CardImage from './CardImage';
-import Favicon from '../../../pages/WebsitesListPage/Favicon';
+import Favicon from '../../Favicon';
 
 export default function WebsiteCard({
   website,
