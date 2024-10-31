@@ -1,9 +1,10 @@
 import { createBrowserRouter, Link, Navigate } from 'react-router-dom';
 import ErrorPage from '../pages/ErrorPage';
-import WebsitesListPage from '../pages/WebsitesListPage/index';
-import { websitesLoader } from './loaders';
+import WebsitesListPage from '../pages/WebsitesListPage';
+import { listsLoader, websitesLoader } from './loaders';
 import { QueryClient } from '@tanstack/react-query';
 import AppLayout from '../components/ui/Layout';
+import ListsPage from '../pages/ListsPage';
 
 export const getRouter = (queryClient: QueryClient) =>
   createBrowserRouter([
@@ -20,7 +21,8 @@ export const getRouter = (queryClient: QueryClient) =>
         },
         {
           path: 'lists',
-          element: <Link to="/lists/1">kaki</Link>,
+          element: <ListsPage />,
+          loader: listsLoader(queryClient),
         },
       ],
     },

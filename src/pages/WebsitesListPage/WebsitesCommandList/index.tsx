@@ -47,10 +47,10 @@ export default function WebsitesCommandList({ websites = [], loading, categories
       <CommandList className="h-4/5">
         <CommandEmpty>{loading ? 'Loading...' : <EmptyState />}</CommandEmpty>
         {Object.keys(websitesByCategory).map((categoryName, index) => (
-          <div>
+          <div key={categoryName}>
             <CommandGroup heading={categoryName}>
               {websitesByCategory[categoryName].map(website => (
-                <WebsiteRow website={website} />
+                <WebsiteRow key={website.id} website={website} />
               ))}
             </CommandGroup>
             {index < Object.keys(websitesByCategory).length - 1 && <CommandSeparator />}

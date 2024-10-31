@@ -81,7 +81,7 @@ export default function WebsiteWizard({ website = undefined, isOpen, onChangeOpe
 
   return (
     <Dialog open={isOpen} onOpenChange={onChangeOpen}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md" aria-description="Website wizard form">
         <DialogHeader>
           <DialogTitle>
             {mode === WizardModes.Create ? 'Add a new site to your list' : `Edit ${website?.name}`}

@@ -10,7 +10,6 @@ export default function WebsiteRow({ website }: { website: Website }) {
         onClick={() => {
           window.location.href = website.url;
         }}
-        key={website.id}
       >
         <Favicon website={website} />
         <span className="text-md">{website.name}</span>

@@ -14,3 +14,11 @@ export type SitePreview = {
   url: string;
   faviconUrl: string;
 };
+
+export type List = {
+  id: string;
+  name: string;
+  is_public: boolean;
+  user_id: string;
+  imageUrl: string;
+};

@@ -1,7 +1,7 @@
 import { QueryClient } from '@tanstack/react-query';
 import { getSitePreviews, getUserFileUrl, supabase } from '../clients/supabase';
 import { Params, defer } from 'react-router-dom';
-import { Website } from '@clients/supabase/types';
+import { List, Website } from '@clients/supabase/types';
 import { PostgrestMaybeSingleResponse } from '@supabase/supabase-js';
 
 export const websitesLoader =
@@ -22,7 +22,7 @@ export const websitesLoader =
       queryClient.ensureQueryData({
         queryKey: ['lists', listId ? parseInt(listId) : ''],
         queryFn: async () =>
-          (await supabase.from('lists').select('*').eq('id', listId)) as PostgrestMaybeSingleResponse<unknown[]>,
+          (await supabase.from('lists').select('*').eq('id', listId)) as PostgrestMaybeSingleResponse<List[]>,
       }),
     ]);
 
@@ -52,3 +52,12 @@ export const websitesLoader =
       sitePreviews: sitePreviewsPromise,
     });
   };
+
+export const listsLoader = (queryClient: QueryClient) => async () => {
+  const { data: lists } = await queryClient.ensureQueryData({
+    queryKey: ['lists'],
+    queryFn: async () => (await supabase.from('lists').select('*')) as PostgrestMaybeSingleResponse<List[]>,
+  });
+
+  return { lists };
+};

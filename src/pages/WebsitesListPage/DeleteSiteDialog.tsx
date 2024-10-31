@@ -26,7 +26,10 @@ export default function DeleteSiteDialog({ isOpen, onClose, website }: DeleteSit
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md flex flex-col gap-12 justify-between">
+      <DialogContent
+        className="sm:max-w-md flex flex-col gap-12 justify-between"
+        aria-description="Delete website dialog"
+      >
         <DialogHeader>
           <DialogTitle>{`Are you sure you want to remove ${website.name}?`}</DialogTitle>
         </DialogHeader>
