@@ -14,6 +14,7 @@ export default defineConfig({
         titleProp: true,
       },
       include: '**/*.svg',
+      exclude: 'node_modules/**',
     }),
   ],
   resolve: {
