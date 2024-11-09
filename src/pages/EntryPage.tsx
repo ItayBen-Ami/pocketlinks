@@ -74,7 +74,7 @@ export default function EntryPage() {
             />
           </div>
           <div className="flex flex-col items-center gap-4">
-            <div className="relative flex 2xl:size-full xl:size-96 max-w-lg items-center justify-center overflow-hidden rounded-lg border px-20 py-8">
+            <div className="relative flex size-full max-w-lg items-center justify-center overflow-hidden rounded-lg px-20 py-8">
               <IconCloud iconSlugs={slugs} />
             </div>
             <Button onClick={handleLogin}>Log In with Google</Button>

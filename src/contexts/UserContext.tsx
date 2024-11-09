@@ -21,6 +21,14 @@ export default function UserProvider({ children }: { children: React.ReactNode }
         data: { session },
       } = await supabase.auth.getSession();
       setSession(session);
+
+      const {
+        data: { subscription },
+      } = supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session);
+      });
+
+      return () => subscription.unsubscribe();
     };
 
     getUserSession();
@@ -28,9 +36,7 @@ export default function UserProvider({ children }: { children: React.ReactNode }
 
   const [session, setSession] = useState<Session | null>();
 
-  const value = useMemo(() => {
-    return { user: session?.user, isLoggedIn: !!session, accessToken: session?.access_token };
-  }, [session]);
+  const value = { user: session?.user, isLoggedIn: !!session, accessToken: session?.access_token };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
 
