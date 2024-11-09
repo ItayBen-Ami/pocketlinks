@@ -11,7 +11,7 @@ import { Website } from '@clients/supabase/types';
 import EmptyState from './EmptyState';
 import CommandActions from './CommandActions';
 import useCommandKeyListener from '@hooks/useCommandKeyListener';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import WebsiteRow from './WebsiteRow';
 import { useCommandList } from '../../../contexts/CommandListContext';
 

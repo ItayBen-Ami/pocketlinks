@@ -69,7 +69,7 @@ export const listsLoader = (queryClient: QueryClient) => async () => {
     .in('list_id', listIds)) as PostgrestMaybeSingleResponse<Website[]>;
 
   const websitesByListId = _.groupBy(websites, 'list_id');
-  const parsedLists = lists.map(list => ({ ...list, websitesCount: websitesByListId?.[list?.id]?.length ?? 0 }));
+  const parsedLists = lists.map(list => ({ ...list, websitesCount: websitesByListId?.[list?.id ?? '']?.length ?? 0 }));
 
   const siteImages = lists.map(({ id, imageUrl }) => ({ id, imageUrl })).filter(({ imageUrl }) => !!imageUrl);
   const imageUrlsPromise = Promise.all(

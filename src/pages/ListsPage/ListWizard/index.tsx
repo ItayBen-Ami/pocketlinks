@@ -40,6 +40,8 @@ export default function ListWizard({ list = undefined, isOpen, onChangeOpen }: L
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-expect-error
   const { mutate: createList, isLoading: isCreateListLoading } = useMutation({
     mutationFn: async (data: List) => {
       const { error } = await supabase.from('lists').insert(data);
@@ -62,6 +64,8 @@ export default function ListWizard({ list = undefined, isOpen, onChangeOpen }: L
     },
   });
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-expect-error
   const { mutate: editList, isLoading: isEditListLoading } = useMutation({
     mutationFn: async (data: List & { imageUrl: string | undefined }) => {
       const { error } = await supabase.from('lists').update(data).eq('id', data.id);
@@ -78,7 +82,7 @@ export default function ListWizard({ list = undefined, isOpen, onChangeOpen }: L
     },
     onError: (error: AxiosError) => {
       toast({
-        title: `An error occurred: ${error.response?.data!.message}`,
+        title: `An error occurred: ${(error.response?.data as { message: string }).message}`,
         variant: 'destructive',
       });
     },
