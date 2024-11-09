@@ -1,9 +1,10 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@components/ui/dialog';
 import { Website } from '@clients/supabase/types';
 import { Button } from '@components/ui/button';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteWebsite } from '@clients/supabase';
 import { useToast } from '@components/hooks/useToast';
+import { useRevalidator } from 'react-router-dom';
 
 type DeleteSiteDialogProps = {
   isOpen: boolean;
@@ -14,13 +15,20 @@ type DeleteSiteDialogProps = {
 export default function DeleteSiteDialog({ isOpen, onClose, website }: DeleteSiteDialogProps) {
   const { toast } = useToast();
 
+  const queryClient = useQueryClient();
+
+  const { revalidate } = useRevalidator();
+
   const { mutate: deleteWebsiteMutation } = useMutation({
     mutationFn: async () => await deleteWebsite(website?.id ?? ''),
-    onSuccess: () => {
+    onSuccess: async () => {
       toast({
         title: `${website.name} was removed`,
         variant: 'success',
       });
+      await queryClient.refetchQueries({ queryKey: ['websites', website?.list_id] });
+      await revalidate();
+      onClose();
     },
   });
 

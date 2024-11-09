@@ -23,7 +23,7 @@ export default function ErrorPage() {
           <Button
             variant="default"
             onClick={() => {
-              navigate('/');
+              navigate('/', { replace: true });
             }}
           >
             Go back home

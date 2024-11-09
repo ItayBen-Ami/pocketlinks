@@ -34,6 +34,7 @@ export default function UserProvider({ children }: { children: React.ReactNode }
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useUser = () => {
   const context = useContext(UserContext);
 

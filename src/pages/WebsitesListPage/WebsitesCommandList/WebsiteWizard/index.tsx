@@ -6,7 +6,6 @@ import { createNewWebsite, uploadFile, BUCKETS_URL, editWebsite } from '@clients
 import z from 'zod';
 import { useToast } from '@components/hooks/useToast';
 import { formSchema } from '../../../../utils/websiteForm';
-import { useMemo } from 'react';
 import { WizardModes } from './constants';
 import { AxiosError } from 'axios';
 import { useRevalidator } from 'react-router-dom';
@@ -19,7 +18,7 @@ type WebsiteWizardProps = {
 };
 
 export default function WebsiteWizard({ website = undefined, isOpen, onChangeOpen, categories }: WebsiteWizardProps) {
-  const mode = useMemo(() => (website ? WizardModes.Edit : WizardModes.Create), [website]);
+  const mode = website ? WizardModes.Edit : WizardModes.Create;
 
   const { revalidate } = useRevalidator();
 
@@ -49,8 +48,9 @@ export default function WebsiteWizard({ website = undefined, isOpen, onChangeOpe
         title: 'Website added successfully',
         variant: 'success',
       });
-      await queryClient.removeQueries({ queryKey: ['websites', website?.list_id] });
+      await queryClient.refetchQueries({ queryKey: ['websites', website?.list_id] });
       revalidate();
+      onChangeOpen(false);
     },
     onError: (error: AxiosError) => {
       toast({
@@ -67,7 +67,7 @@ export default function WebsiteWizard({ website = undefined, isOpen, onChangeOpe
         title: 'Website edited successfully',
         variant: 'success',
       });
-      await queryClient.removeQueries({ queryKey: ['websites', website?.list_id] });
+      await queryClient.refetchQueries({ queryKey: ['websites', website?.list_id] });
       revalidate();
       onChangeOpen(false);
     },

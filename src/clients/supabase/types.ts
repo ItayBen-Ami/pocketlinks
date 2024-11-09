@@ -16,9 +16,9 @@ export type SitePreview = {
 };
 
 export type List = {
-  id: string;
+  id?: string;
   name: string;
   is_public: boolean;
-  user_id: string;
+  user_id?: string;
   imageUrl: string;
 };

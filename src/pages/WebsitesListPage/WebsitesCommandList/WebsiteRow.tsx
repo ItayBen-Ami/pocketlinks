@@ -11,7 +11,7 @@ export default function WebsiteRow({ website }: { website: Website }) {
           window.location.href = website.url;
         }}
       >
-        <Favicon website={website} />
+        <Favicon website={website} withAnimation={false} />
         <span className="text-md">{website.name}</span>
       </div>
     </CommandItem>

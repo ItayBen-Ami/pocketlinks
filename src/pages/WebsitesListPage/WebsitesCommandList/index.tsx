@@ -13,6 +13,7 @@ import CommandActions from './CommandActions';
 import useCommandKeyListener from '@hooks/useCommandKeyListener';
 import { useCallback, useState } from 'react';
 import WebsiteRow from './WebsiteRow';
+import { useCommandList } from '../../../contexts/CommandListContext';
 
 type WebsitesCommandListProps = {
   websites: Website[];
@@ -37,20 +38,24 @@ export default function WebsitesCommandList({ websites = [], loading, categories
     [websites],
   );
 
-  const [commandMenuOpen, setCommandMenuOpen] = useState(false);
+  const { isModalOpen, openModal, closeModal } = useCommandList();
 
-  useCommandKeyListener({ key: 'k', callback: () => setCommandMenuOpen(!commandMenuOpen) });
+  useCommandKeyListener({ key: 'k', callback: () => (isModalOpen ? closeModal() : openModal()) });
 
   return (
-    <CommandDialog filter={websitesFilter} open={commandMenuOpen} onOpenChange={setCommandMenuOpen}>
+    <CommandDialog
+      filter={websitesFilter}
+      open={isModalOpen}
+      onOpenChange={() => (isModalOpen ? closeModal() : openModal())}
+    >
       <CommandInput placeholder="Search..." />
       <CommandList className="h-4/5">
         <CommandEmpty>{loading ? 'Loading...' : <EmptyState />}</CommandEmpty>
         {Object.keys(websitesByCategory).map((categoryName, index) => (
-          <div key={categoryName}>
+          <div>
             <CommandGroup heading={categoryName}>
               {websitesByCategory[categoryName].map(website => (
-                <WebsiteRow key={website.id} website={website} />
+                <WebsiteRow website={website} />
               ))}
             </CommandGroup>
             {index < Object.keys(websitesByCategory).length - 1 && <CommandSeparator />}
