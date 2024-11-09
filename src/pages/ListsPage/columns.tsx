@@ -26,7 +26,7 @@ export const getColumns = (
   {
     header: 'Access',
     accessorKey: 'is_public',
-    cell: ({ cell, row }) => <ListAccess isPublic={cell.getValue() as boolean} listId={row.original.id} />,
+    cell: ({ cell, row }) => <ListAccess isPublic={cell.getValue() as boolean} listId={row.original.id ?? ''} />,
   },
   {
     header: 'Actions',
