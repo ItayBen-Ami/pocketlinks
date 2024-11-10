@@ -48,7 +48,7 @@ export default function WebsiteWizard({ website = undefined, isOpen, onChangeOpe
         title: 'Website added successfully',
         variant: 'success',
       });
-      await queryClient.refetchQueries({ queryKey: ['websites', website?.list_id] });
+      await queryClient.refetchQueries({ queryKey: ['websites'] });
       revalidate();
       onChangeOpen(false);
     },
