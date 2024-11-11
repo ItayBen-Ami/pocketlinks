@@ -1,13 +1,18 @@
 import WebsitesCommandList from './WebsitesCommandList';
 import WebsitesCardsList from './WebsitesCardsList';
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData, useParams } from 'react-router-dom';
 import { Website } from '@clients/supabase/types';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import WebsitesDock from './WebsitesDock';
 import { ArrowLeft } from 'lucide-react';
+import { useUser } from '../../contexts/UserContext';
 
 export default function WebsitesListPage() {
   const { websites } = useLoaderData() as { websites: Website[] };
+
+  const { user } = useUser();
+
+  const { listId } = useParams();
 
   const categories = Array.from(
     websites.reduce((acc, current) => {
@@ -19,7 +24,7 @@ export default function WebsitesListPage() {
 
   const [pinnedWebsites, setPinnedWebsites] = useLocalStorage<
     { title: string; icon: React.ReactNode; href: string; id: string }[]
-  >('pinnedWebsites', []);
+  >(`pinnedWebsites${user?.id}${listId}`, []);
 
   return (
     <div className="h-full">
