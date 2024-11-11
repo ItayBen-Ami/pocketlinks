@@ -48,6 +48,7 @@ export const websitesLoader =
     });
 
     return defer({
+      list: lists[0],
       websites,
       images: imageUrlsPromise,
       sitePreviews: sitePreviewsPromise,

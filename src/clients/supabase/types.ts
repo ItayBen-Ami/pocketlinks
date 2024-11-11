@@ -4,7 +4,7 @@ export interface Website {
   url: string;
   icon?: string;
   category: string;
-  list_id: number;
+  list_id?: number;
 }
 
 export type SitePreview = {

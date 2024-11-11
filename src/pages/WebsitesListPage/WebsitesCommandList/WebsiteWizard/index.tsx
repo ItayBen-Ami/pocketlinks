@@ -1,14 +1,14 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@components/ui/dialog';
 import { WebsiteForm } from './WebsiteForm';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Website } from '@clients/supabase/types';
+import { List, Website } from '@clients/supabase/types';
 import { createNewWebsite, uploadFile, BUCKETS_URL, editWebsite } from '@clients/supabase';
 import z from 'zod';
 import { useToast } from '@components/hooks/useToast';
 import { formSchema } from '../../../../utils/websiteForm';
 import { WizardModes } from './constants';
 import { AxiosError } from 'axios';
-import { useRevalidator } from 'react-router-dom';
+import { useLoaderData, useRevalidator } from 'react-router-dom';
 
 type WebsiteWizardProps = {
   website: Website | undefined;
@@ -18,6 +18,8 @@ type WebsiteWizardProps = {
 };
 
 export default function WebsiteWizard({ website = undefined, isOpen, onChangeOpen, categories }: WebsiteWizardProps) {
+  const { list } = useLoaderData() as { list: List };
+
   const mode = website ? WizardModes.Edit : WizardModes.Create;
 
   const { revalidate } = useRevalidator();
@@ -35,9 +37,9 @@ export default function WebsiteWizard({ website = undefined, isOpen, onChangeOpe
     }
 
     if (website) {
-      editSite({ ...formData, id: website.id, list_id: 1, icon: iconUrl || website.icon });
+      editSite({ ...formData, id: website.id, list_id: website.list_id, icon: iconUrl || website.icon });
     } else {
-      createWebsite({ ...formData, icon: iconUrl, list_id: 1 });
+      createWebsite({ ...formData, icon: iconUrl, list_id: list.id ? parseInt(list.id) : undefined });
     }
   };
 
