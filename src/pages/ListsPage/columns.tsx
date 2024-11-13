@@ -7,6 +7,7 @@ import ListActions from './ListActions';
 export const getColumns = (
   onSelectedListChange: (list: List) => void,
   openEditModal: () => void,
+  openDeleteModal: () => void,
 ): ColumnDef<List & { websitesCount: number }>[] => [
   {
     accessorKey: 'name',
@@ -31,7 +32,12 @@ export const getColumns = (
   {
     header: 'Actions',
     cell: ({ row }) => (
-      <ListActions list={row.original} onSelectedListChange={onSelectedListChange} openEditModal={openEditModal} />
+      <ListActions
+        list={row.original}
+        onSelectedListChange={onSelectedListChange}
+        openEditModal={openEditModal}
+        openDeleteModal={openDeleteModal}
+      />
     ),
   },
 ];

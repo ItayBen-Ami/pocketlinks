@@ -9,16 +9,25 @@ export default function ListActions({
   list,
   onSelectedListChange,
   openEditModal,
+  openDeleteModal,
 }: {
   list: List;
   onSelectedListChange: (list: List) => void;
   openEditModal: () => void;
+  openDeleteModal: () => void;
 }) {
   const handleOpenEditWizard = (e: SyntheticEvent) => {
     e.stopPropagation();
     e.preventDefault();
     onSelectedListChange(list);
     openEditModal();
+  };
+
+  const handleOpenDeleteWizard = (e: SyntheticEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    onSelectedListChange(list);
+    openDeleteModal();
   };
 
   return (
@@ -34,7 +43,7 @@ export default function ListActions({
         </Tooltip>
         <Tooltip>
           <TooltipTrigger>
-            <Button variant="outline" size="icon" onClick={() => {}}>
+            <Button variant="outline" size="icon" onClick={handleOpenDeleteWizard}>
               <Trash2 strokeWidth={2} className="size-4 absolute" />
             </Button>
           </TooltipTrigger>
