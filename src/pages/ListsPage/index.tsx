@@ -5,6 +5,7 @@ import { getColumns } from './columns';
 import { Button } from '../../components/ui/button';
 import ListWizard from './ListWizard';
 import { useState } from 'react';
+import DeleteListDialog from './DeleteListDialog';
 
 export default function ListsPage() {
   const { lists } = useLoaderData() as {
@@ -14,9 +15,14 @@ export default function ListsPage() {
   const navigate = useNavigate();
 
   const [isListWizardOpen, setListWizardOpen] = useState(false);
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedList, setSelectedList] = useState<List | undefined>(undefined);
 
-  const columns = getColumns(setSelectedList, () => setListWizardOpen(true));
+  const columns = getColumns(
+    setSelectedList,
+    () => setListWizardOpen(true),
+    () => setDeleteDialogOpen(true),
+  );
   return (
     <>
       <div className="flex flex-col gap-8 mt-8">
@@ -36,6 +42,7 @@ export default function ListsPage() {
         </div>
       </div>
       <ListWizard list={selectedList} isOpen={isListWizardOpen} onChangeOpen={setListWizardOpen} />
+      <DeleteListDialog isOpen={isDeleteDialogOpen} list={selectedList} onClose={() => setDeleteDialogOpen(false)} />
     </>
   );
 }
