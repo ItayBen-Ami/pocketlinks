@@ -98,7 +98,7 @@ export const getUserFileUrl = async (filePath: string) => {
 
   const { data, error } = await supabase.storage
     .from('icons')
-    .createSignedUrl(filePath.split(`${BUCKETS_URL}/icons`).at(-1) ?? '', 60 * 60 * 2);
+    .createSignedUrl(filePath.split(`${BUCKETS_URL}/icons`).at(-1) ?? '', 60 * 60 * 24);
 
   if (error) {
     return null;

@@ -1,6 +1,6 @@
 import { QueryClient } from '@tanstack/react-query';
 import { getSitePreviews, getUserFileUrl, supabase } from '../clients/supabase';
-import { Params, defer } from 'react-router-dom';
+import { defer, Params } from 'react-router-dom';
 import { List, Website } from '@clients/supabase/types';
 import { PostgrestMaybeSingleResponse } from '@supabase/supabase-js';
 import _ from 'lodash';
@@ -14,11 +14,9 @@ export const websitesLoader =
       queryClient.ensureQueryData({
         queryKey: ['websites', listId ? parseInt(listId) : ''],
         queryFn: async () =>
-          (await supabase
-            .from('websites')
-            .select('*')
-            .eq('list_id', listId)
-            .order('created_at', { ascending: true })) as PostgrestMaybeSingleResponse<Website[]>,
+          (await supabase.from('websites').select('*').eq('list_id', listId).order('created_at', {
+            ascending: true,
+          })) as PostgrestMaybeSingleResponse<Website[]>,
       }),
       queryClient.ensureQueryData({
         queryKey: ['lists', listId ? parseInt(listId) : ''],
@@ -70,7 +68,10 @@ export const listsLoader = (queryClient: QueryClient) => async () => {
     .in('list_id', listIds)) as PostgrestMaybeSingleResponse<Website[]>;
 
   const websitesByListId = _.groupBy(websites, 'list_id');
-  const parsedLists = lists.map(list => ({ ...list, websitesCount: websitesByListId?.[list?.id ?? '']?.length ?? 0 }));
+  const parsedLists = lists.map(list => ({
+    ...list,
+    websitesCount: websitesByListId?.[list?.id ?? '']?.length ?? 0,
+  }));
 
   const siteImages = lists.map(({ id, imageUrl }) => ({ id, imageUrl })).filter(({ imageUrl }) => !!imageUrl);
   const imageUrlsPromise = Promise.all(
@@ -78,7 +79,7 @@ export const listsLoader = (queryClient: QueryClient) => async () => {
       image: await queryClient.ensureQueryData({
         queryKey: ['listSignedUrls', imageUrl],
         queryFn: async () => await getUserFileUrl(imageUrl as string),
-        staleTime: 1000 * 60 * 60 * 2,
+        staleTime: 1000 * 60 * 60 * 24,
       }),
       id,
     })),
