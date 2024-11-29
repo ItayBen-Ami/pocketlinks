@@ -79,7 +79,7 @@ export const listsLoader = (queryClient: QueryClient) => async () => {
       image: await queryClient.ensureQueryData({
         queryKey: ['listSignedUrls', imageUrl],
         queryFn: async () => await getUserFileUrl(imageUrl as string),
-        staleTime: 1000 * 60 * 60 * 24,
+        staleTime: 0,
       }),
       id,
     })),
