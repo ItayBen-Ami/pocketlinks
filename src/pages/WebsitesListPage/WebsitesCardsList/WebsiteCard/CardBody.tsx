@@ -4,7 +4,6 @@ import { ButtonGroup } from '@components/ui/button-group';
 import { Button } from '@components/ui/button';
 import { Pencil, Pin, PinOff, Trash2 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import useLocalStorage from '../../../../hooks/useLocalStorage';
 
 type CardBodyProps = {
   website: Website;
@@ -34,7 +33,7 @@ export default function CardBody({
       <div className="flex flex-col gap-1">
         <CardHeader>
           <CardTitle>
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="flex gap-3 justify-start items-center">
                 {header}
                 <motion.div layoutId={`card-${website.name}-${website.id}`}>

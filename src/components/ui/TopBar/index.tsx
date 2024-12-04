@@ -19,9 +19,9 @@ export default function TopBar() {
 
   const logo = useMemo(() => {
     // @ts-expect-error className is allowed
-    const darkModeIcon = <WhiteLogo className="w-36" />;
+    const darkModeIcon = <WhiteLogo className="hidden md:block w-36" />;
     // @ts-expect-error className is allowed
-    const lightModeIcon = <BlackLogo className="w-36" />;
+    const lightModeIcon = <BlackLogo className="hidden md:block w-36" />;
 
     if (theme === 'dark') return darkModeIcon;
     if (theme === 'light') return lightModeIcon;
@@ -42,7 +42,7 @@ export default function TopBar() {
           {match && (
             <Button variant="outline" className="flex justify-between gap-8" onClick={openModal}>
               Search
-              <div className="flex gap-1">
+              <div className="gap-1 hidden md:flex">
                 <div className="p-2 bg-border rounded-sm">
                   <CommandIcon className="size-3" />
                 </div>
