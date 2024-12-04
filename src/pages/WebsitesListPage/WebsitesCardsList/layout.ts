@@ -3,8 +3,8 @@ import { cn } from '@/lib/utils';
 export type LayoutTypes = 'layoutGrid' | 'bentoGrid';
 
 export const containerClassNameByType: Record<LayoutTypes, string> = {
-  layoutGrid: 'grid-cols-4 grid gap-8',
-  bentoGrid: 'grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[19rem]',
+  layoutGrid: 'grid-cols-1 md:grid-cols-4 grid gap-8',
+  bentoGrid: 'grid grid-cols-1 md:grid-cols-3 gap-8 auto-rows-[19rem]',
 };
 
 export const itemClassNameByType: Record<LayoutTypes, (index: number) => string> = {
