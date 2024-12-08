@@ -33,7 +33,7 @@ export const websitesLoader =
         icon: await queryClient.ensureQueryData({
           queryKey: ['signedUrls', icon],
           queryFn: () => getUserFileUrl(icon as string),
-          staleTime: 1000 * 60 * 60 * 2,
+          staleTime: 0,
         }),
         url,
       })),
@@ -80,7 +80,6 @@ export const listsLoader = (queryClient: QueryClient) => async () => {
         queryKey: ['listSignedUrls', imageUrl],
         queryFn: async () => await getUserFileUrl(imageUrl as string),
         staleTime: 0,
-        gcTime: 0,
       }),
       id,
     })),
