@@ -30,11 +30,7 @@ export const websitesLoader =
     const siteImages = websites.map(({ icon, url }) => ({ icon, url })).filter(icon => !!icon);
     const imageUrlsPromise = Promise.all(
       siteImages.map(async ({ icon, url }) => ({
-        icon: await queryClient.ensureQueryData({
-          queryKey: ['signedUrls', icon],
-          queryFn: () => getUserFileUrl(icon as string),
-          staleTime: 0,
-        }),
+        icon: await getUserFileUrl(icon as string),
         url,
       })),
     );
@@ -76,11 +72,7 @@ export const listsLoader = (queryClient: QueryClient) => async () => {
   const siteImages = lists.map(({ id, imageUrl }) => ({ id, imageUrl })).filter(({ imageUrl }) => !!imageUrl);
   const imageUrlsPromise = Promise.all(
     siteImages.map(async ({ id, imageUrl }) => ({
-      image: await queryClient.ensureQueryData({
-        queryKey: ['listSignedUrls', imageUrl],
-        queryFn: async () => await getUserFileUrl(imageUrl as string),
-        staleTime: 0,
-      }),
+      image: await await getUserFileUrl(imageUrl as string),
       id,
     })),
   );
